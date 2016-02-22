@@ -6,17 +6,20 @@ showresults = 1;
 currDr = cd;
 directory = 'Training';
 files = dir(fullfile(currDr, directory, '*.JPG'));
+
 resultfolder = fullfile(currDr, 'Manual Classification');
+resultfolder2 = fullfile(currDr, 'Training Features');
 patchWidth = 256;
 numImageFiles = size(files, 1);
 labelling = double(0);
+xpatch = zeros(1,1);
+ypatch = zeros(1,1);
 
 %% show the abnormal patches
 
     for i = 1 : numImageFiles
         [~,name, ~] = fileparts(files(i).name);
         I = (imread(fullfile(currDr, directory,files(i).name)));
-        sz = size(I);
         
         for j=0% may be later we will try this 0:2
             
@@ -45,8 +48,7 @@ labelling = double(0);
             figure; imshow(I); hold on
             resultfile = fullfile(resultfolder,['labelling_' name, '_', int2str(j),'.mat']);
             load(resultfile); %labelling
-            
-            
+
             for k = 1 : size(labelling, 1)
                 if showresults
                     x1 = double(labelling(k,1));
@@ -59,36 +61,26 @@ labelling = double(0);
                     plot([x1 x1 + patchWidth], [y1 + patchWidth y1 + patchWidth],'-r');
                     
                 end
-                if labelling(k,2) == 0 || labelling(k,1) == 0
-                   
-                    labelling(k,2) = 1;
-                    labelling(k,1) = 1;
-                    
-                Patch = double(I(labelling(k,2):labelling(k,2) + labelling(k,3), labelling(k,1):labelling(k,1)+labelling(k,3)));
                 
-                end
+                for m = 1:size(labelling)
                 %step 1: collect features for each patch
-                %patchfeatures = getData(Patch);
+                    if labelling(m,2) == 0 || labelling(m,1) == 0
+                   
+                        labelling(m,2) = 1;
+                        labelling(m,1) = 1;
+                    
+                        p{m} = double(I(labelling(m,2):labelling(m,2) + labelling(m,3),...
+                            labelling(m,1):labelling(m,1)+labelling(m,3)));
                 
-                %y2 = min([y1 sz(1)]);
-                %x2 = min([x1 sz(2)]);
-                
-                %p1 = I(y1:y2, x1:x2);
-                
-%                 y2 = min([y1 sz(1)]);
-%                 x2 = min([x1 sz(2)]);
-%                 y3 = (y1:y2);
-%                 x3 = (x1:x2);
-%                 p1 = mod(y3, x3);
-
-                
-                %for k = 1 : length(patchNum)
-                
-                %generate feature data for each identified patch, for loop?
-                %e.g. 
-                %f1 = skewness(double(p1));
-                %f2 = kurtosis(double(p1));
+                    else
+                        p{m} = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
+                            labelling(k,1):labelling(k,1)+labelling(k,3)));
+                        save p;
+                    end
+                end
                 
             end
+            
         end
     end
+end
