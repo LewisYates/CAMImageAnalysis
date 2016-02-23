@@ -12,8 +12,6 @@ resultfolder2 = fullfile(currDr, 'Training Features');
 patchWidth = 256;
 numImageFiles = size(files, 1);
 labelling = double(0);
-xpatch = zeros(1,1);
-ypatch = zeros(1,1);
 
 %% show the abnormal patches
 
@@ -60,24 +58,31 @@ ypatch = zeros(1,1);
                     plot([x1 + patchWidth x1 + patchWidth], [y1 y1 + patchWidth],'-r');
                     plot([x1 x1 + patchWidth], [y1 + patchWidth y1 + patchWidth],'-r');
                     
-                end
-                
-                for m = 1:size(labelling)
-                %step 1: collect features for each patch
-                    if labelling(m,2) == 0 || labelling(m,1) == 0
+                    if labelling(k,2) == 0 || labelling(k,1) == 0
                    
-                        labelling(m,2) = 1;
-                        labelling(m,1) = 1;
-                    
-                        p{m} = double(I(labelling(m,2):labelling(m,2) + labelling(m,3),...
-                            labelling(m,1):labelling(m,1)+labelling(m,3)));
+                        labelling(k,2) = 1;
+                        labelling(k,1) = 1;
+                        
+                        p = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
+                        labelling(k,1):labelling(k,1)+labelling(k,3)));
+                        resultfile = fullfile(resultfolder2,['patch_', int2str(k),'.mat']);
+                        save(resultfile,'p');
+                        %disp(strcat('Manual Classification File Saved To: ', resultfile));
                 
                     else
-                        p{m} = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
-                            labelling(k,1):labelling(k,1)+labelling(k,3)));
-                        save p;
+                        p = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
+                        labelling(k,1):labelling(k,1)+labelling(k,3)));
+                        resultfile = fullfile(resultfolder2,['patch_', int2str(k),'.mat']);
+                        save(resultfile,'p');
+                        %disp(strcat('Manual Classification File Saved To: ', resultfile));
                     end
+                    
                 end
+                
+                %for m = 1:size(labelling, 1)
+                %step 1: collect features for each patch
+                    
+                %end
                 
             end
             
