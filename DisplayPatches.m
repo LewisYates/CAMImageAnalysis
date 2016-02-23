@@ -8,7 +8,7 @@ directory = 'Training';
 files = dir(fullfile(currDr, directory, '*.JPG'));
 
 resultfolder = fullfile(currDr, 'Manual Classification');
-resultfolder2 = fullfile(currDr, 'Training Features');
+resultfolder2 = fullfile(currDr, 'TrainingFeatures');
 patchWidth = 256;
 numImageFiles = size(files, 1);
 labelling = double(0);
@@ -63,16 +63,16 @@ labelling = double(0);
                         labelling(k,2) = 1;
                         labelling(k,1) = 1;
                         
-                        p = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
+                        p{k} = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
                         labelling(k,1):labelling(k,1)+labelling(k,3)));
-                        resultfile = fullfile(resultfolder2,['patch_', int2str(k),'.mat']);
+                        resultfile = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'.mat']);
                         save(resultfile,'p');
                         %disp(strcat('Manual Classification File Saved To: ', resultfile));
                 
                     else
-                        p = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
+                        p{k} = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
                         labelling(k,1):labelling(k,1)+labelling(k,3)));
-                        resultfile = fullfile(resultfolder2,['patch_', int2str(k),'.mat']);
+                        resultfile = fullfile(resultfolder2,[name, '_', 'patch_', int2str(k),'.mat']);
                         save(resultfile,'p');
                         %disp(strcat('Manual Classification File Saved To: ', resultfile));
                     end
