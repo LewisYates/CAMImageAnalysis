@@ -47,6 +47,7 @@ labelling = double(0);
             resultfile = fullfile(resultfolder,['labelling_' name, '_', int2str(j),'.mat']);
             load(resultfile); %labelling
 
+%% Plot the patches            
             for k = 1 : size(labelling, 1)
                 if showresults
                     x1 = double(labelling(k,1));
@@ -57,7 +58,8 @@ labelling = double(0);
                     plot([x1 x1 + patchWidth], [y1 y1],'-r');
                     plot([x1 + patchWidth x1 + patchWidth], [y1 y1 + patchWidth],'-r');
                     plot([x1 x1 + patchWidth], [y1 + patchWidth y1 + patchWidth],'-r');
-                    
+
+%% Save Patches                    
                     if labelling(k,2) == 0 || labelling(k,1) == 0
                    
                         labelling(k,2) = 1;
@@ -78,11 +80,6 @@ labelling = double(0);
                     end
                     
                 end
-                
-                %for m = 1:size(labelling, 1)
-                %step 1: collect features for each patch
-                    
-                %end
                 
             end
             
