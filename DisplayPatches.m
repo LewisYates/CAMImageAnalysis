@@ -36,6 +36,7 @@ for i = 1 : numImageFiles
             shiftx = 1;
             shifty = 1;
             
+<<<<<<< HEAD
         end
         
         xRange = patchWidth-shiftx-1:patchWidth:size(I,2);
@@ -74,10 +75,43 @@ for i = 1 : numImageFiles
                     IV = I_HSV(:,:,3);
                     
                     patchRed = double(IR(labelling(k,2):labelling(k,2) + labelling(k,3),...
+=======
+            figure; imshow(I); hold on
+            resultfile = fullfile(resultfolder,['labelling_' name, '_', int2str(j),'.mat']);
+            load(resultfile); %labelling
+
+%% Plot the patches            
+            for k = 1 : size(labelling, 1)
+                if showresults
+                    x1 = double(labelling(k,1));
+                    y1 = double(labelling(k,2));
+                    patchWidth = double(labelling(k,3));
+                    
+                    plot([x1 x1], [y1 y1 + patchWidth],'-r');
+                    plot([x1 x1 + patchWidth], [y1 y1],'-r');
+                    plot([x1 + patchWidth x1 + patchWidth], [y1 y1 + patchWidth],'-r');
+                    plot([x1 x1 + patchWidth], [y1 + patchWidth y1 + patchWidth],'-r');
+
+%% Save Patches                    
+                    if labelling(k,2) == 0 || labelling(k,1) == 0
+                   
+                        labelling(k,2) = 1;
+                        labelling(k,1) = 1;
+                        
+                        p = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
+                        labelling(k,1):labelling(k,1)+labelling(k,3)));
+                        resultfile = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'.mat']);
+                        save(resultfile,'p');
+                        %disp(strcat('Manual Classification File Saved To: ', resultfile));
+                
+                    else
+                        p = double(I(labelling(k,2):labelling(k,2) + labelling(k,3),...
+>>>>>>> origin/master
                         labelling(k,1):labelling(k,1)+labelling(k,3)));
                     resultfile = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Red','.mat']);
                     save(resultfile,'patchRed');
                     
+<<<<<<< HEAD
                     patchGreen = double(IG(labelling(k,2):labelling(k,2) + labelling(k,3),...
                         labelling(k,1):labelling(k,1)+labelling(k,3)));
                     resultfile = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Green','.mat']);
@@ -155,6 +189,8 @@ for i = 1 : numImageFiles
                     resultfile = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Value','.mat']);
                     save(resultfile,'patchVal');
                     
+=======
+>>>>>>> origin/master
                 end
                 
             end
