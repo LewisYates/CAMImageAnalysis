@@ -1,11 +1,10 @@
 function ClassifierTraining 
 
-%% Naive Bayes Training 
 normalFeaturesLoad = load('normalFeatures', '-regexp', 'normalFeatures');
 structConversion = struct2cell(normalFeaturesLoad);
 X = cell2mat(structConversion);
 
-Y = X(1, :);
+Y = X( 3, :);
 X = X(:, 3: 2316);
 
 pS = sum (Y)/size(Y,1);     % all rows with Y = 1 
