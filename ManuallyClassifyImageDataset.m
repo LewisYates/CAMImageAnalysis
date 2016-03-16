@@ -25,15 +25,13 @@ numImageFiles = size(files, 1);
             %2 shift y
             
             % get a set of abnormal paches
-            labelling = SelectManualClassification(I, patchWidth, j);
-            resultfile = fullfile(resultfolder,['labelling_' name, '_', int2str(j),'.mat']);
-            save(resultfile,'labelling');
+            normalpatches = SelectManualClassification(I, patchWidth, j);
+            %resultfile = fullfile(resultfolder,['abnormalpatches_' name, '_', int2str(j),'.mat']);
+            %save(resultfile,'abnormalpatches');
+            resultfile = fullfile(resultfolder,['normalpatches_' name, '_', int2str(j),'.mat']);
+            save(resultfile,'normalpatches');
             disp(strcat('Manual Classification File Saved To: ', resultfile));
-
-            
         end
     end
-    
-    
 end
 

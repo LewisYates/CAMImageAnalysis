@@ -1,4 +1,4 @@
-function abnormalpatches = SelectManualClassification(I, patchWidth, shiftdir)
+function [abnormalpatches, allpatches] = SelectManualClassification(I, patchWidth, shiftdir)
 
 %%% SelectManualClassification function allows for the precise collection of patch data from a Training Data Set
 
@@ -66,6 +66,18 @@ I1(:,xRange,:) = 1;
 
 
 f = figure; imshow(I1); hold on
+% to collect up left corner cordinate of all patches
+% allpatches = [];
+% xcordofPatches = [1 xRange(1:end-1)];
+% ycordofPatches = [1 yRange(1:end-1)];
+% for x=1:length(xcordofPatches)
+%     for y=1:length(ycordofPatches)
+%         allpatches=[allpatches; xcordofPatches(x) ycordofPatches(y)];
+%     end
+% end
+% for w=1:size(allpatches,1)
+%    plot(allpatches(w,1), allpatches(w,2),'dy');
+% end
 
 abnormalpatches=[];
 

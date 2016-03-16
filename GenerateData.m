@@ -2,13 +2,13 @@ function GenerateData
 %GenerateData Generates feature data from input image.
 
 %% Variable Declarations
-filelist = dir([fileparts('/Users/LewisYates/Documents/MATLAB/Dissertation/Manual Classification/') filesep '*.mat']);
+filelist = dir([fileparts('/Users/LewisYates/Documents/MATLAB/Dissertation/Patches') filesep '*.mat']);
 filenames = {filelist.name};
-outDir = ('/Users/LewisYates/Documents/MATLAB/Dissertation/TrainingFeatures/');
+outDir = ('/Users/LewisYates/Documents/MATLAB/Dissertation/Code');
 w = 256;
 h = 256;
 currDr = cd;
-directory = 'Manual Classification';
+directory = 'Patches';
 files = dir(fullfile(currDr, directory, '*.mat'));
 numPatchFiles = size(files, 1);
 images = {};
@@ -36,20 +36,20 @@ for i = 1 : numPatchFiles
     [~,name, ~] = fileparts(files(i).name);
     %I = (imread(fullfile(currDr, directory,files(i).name)));
     
-    %HSV Colour Space Conversion from RGB
-    I_HSV = uint8(rgb2hsv(I) * (255/1));
-    
-    %Define the colour channels
-    IR = I(:,:,1);
-    IG = I(:,:,2);
-    IB = I(:,:,3);
-    IGray = rgb2gray(I);
-    IH = I_HSV(:,:,1);
-    IS = I_HSV(:,:,2);
-    IV = I_HSV(:,:,3);
-    
-    images = {IR IG IB IGray IH IS IV};
-    tags = {'RED' 'GREEN' 'BLUE' 'GRAY' 'HUE' 'SAT' 'INT'};
+%     %HSV Colour Space Conversion from RGB
+%     I_HSV = uint8(rgb2hsv(I) * (255/1));
+%     
+%     %Define the colour channels
+%     IR = I(:,:,1);
+%     IG = I(:,:,2);
+%     IB = I(:,:,3);
+%     IGray = rgb2gray(I);
+%     IH = I_HSV(:,:,1);
+%     IS = I_HSV(:,:,2);
+%     IV = I_HSV(:,:,3);
+%     
+%     images = {IR IG IB IGray IH IS IV};
+%     tags = {'RED' 'GREEN' 'BLUE' 'GRAY' 'HUE' 'SAT' 'INT'};
     
     %Loop through all the feature generation functions
     for j=1:length(featureFunctions)
