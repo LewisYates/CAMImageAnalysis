@@ -6,18 +6,18 @@ filelist = dir([fileparts('/Users/LewisYates/Documents/MATLAB/Dissertation/Norma
 filenames = {filelist.name};
 showresults = 1;
 currDr = cd;
-directory = 'Training';
-directory2 = 'Normal Patches';
+directory = 'Testing';
+directory2 = 'Testing/Testing Abnormal Patches';
 files = dir(fullfile(currDr, directory, '*.JPG'));
 files2 = dir(fullfile(currDr, directory2, '*.mat'));
 resultfolder = fullfile(currDr, 'Manual Classification');
-resultfolder2 = fullfile(currDr, 'Normal Patches');
+resultfolder2 = fullfile(currDr, 'Testing/Testing Abnormal Patches');
 patchWidth = 256;
 numImageFiles = size(files, 1);
 numPatchFiles = size(files2, 1);
 labelling = double(0);
 allpatches = double(0);
-normalpatches = double(0);
+testAbnormalPatches = double(0);
 
 % show the abnormal patches
 
@@ -67,21 +67,21 @@ for i = 1 : numImageFiles
 % %         end
 % %         
 %         
-%         resultfile2 = fullfile(resultfolder2,['normalpatches_' name, '_', int2str(j),'.mat']);
+%         resultfile2 = fullfile(resultfolder2,['testAbnormalPatches_' name, '_', int2str(j),'.mat']);
 %         load(resultfile2); %labelling       
 %         
 %         
 % %        for k = 1 : size(labelling, 1)
-%         for k = 1: size(normalpatches,1)
+%         for k = 1: size(testAbnormalPatches,1)
 %             %if ismember(normalpatches(k,:), labelling)
 % %            end
 % %        end
 %         %collect features of normal patches
 %         
 %         if showresults
-%             x1 = double(normalpatches(k,1));
-%             y1 = double(normalpatches(k,2));
-%             patchWidth = double(normalpatches(k,3));
+%             x1 = double(testAbnormalPatches(k,1));
+%             y1 = double(testAbnormalPatches(k,2));
+%             patchWidth = double(testAbnormalPatches(k,3));
 %             
 %             %plot the patches
 %             plot([x1 x1], [y1 y1 + patchWidth],'-r');
@@ -92,10 +92,10 @@ for i = 1 : numImageFiles
 %         end
 % 
 %         %% Colour Channels for each normal patch
-%             if normalpatches(k,2) == 0 || normalpatches(k,1) == 0
+%             if testAbnormalPatches(k,2) == 0 || testAbnormalPatches(k,1) == 0
 %             
-%                 normalpatches(k,2) = 1;
-%                 normalpatches(k,1) = 1;
+%                 testAbnormalPatches(k,2) = 1;
+%                 testAbnormalPatches(k,1) = 1;
 %             
 % %             if ismember(normalpatches(k,:), labelling)
 %                 
@@ -109,38 +109,38 @@ for i = 1 : numImageFiles
 %                 IS = I_HSV(:,:,2);
 %                 IV = I_HSV(:,:,3);
 %                 
-%                 patchRed = double(IR(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchRed = double(IR(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Red','.mat']);
 %                 save(resultfile1,'patchRed');
 %                 
-%                 patchGreen = double(IG(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchGreen = double(IG(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Green','.mat']);
 %                 save(resultfile1,'patchGreen');
 %                 
-%                 patchBlue = double(IB(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchBlue = double(IB(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Blue','.mat']);
 %                 save(resultfile1,'patchBlue');
 %                 
-%                 patchGrey = double(IGray(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchGrey = double(IGray(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Grey','.mat']);
 %                 save(resultfile1,'patchGrey');
 %                 
-%                 patchHue = double(IH(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchHue = double(IH(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Hue','.mat']);
 %                 save(resultfile1,'patchHue');
 %                 
-%                 patchSat = double(IS(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchSat = double(IS(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Saturation','.mat']);
 %                 save(resultfile1,'patchSat');
 %                 
-%                 patchVal = double(IV(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchVal = double(IV(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Value','.mat']);
 %                 save(resultfile1,'patchVal');
 %                 
@@ -156,38 +156,38 @@ for i = 1 : numImageFiles
 %                 IS = I_HSV(:,:,2);
 %                 IV = I_HSV(:,:,3);
 %                 
-%                 patchRed = double(IR(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchRed = double(IR(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Red','.mat']);
 %                 save(resultfile1,'patchRed');
 %                 
-%                 patchGreen = double(IG(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchGreen = double(IG(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Green','.mat']);
 %                 save(resultfile1,'patchGreen');
 %                 
-%                 patchBlue = double(IB(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchBlue = double(IB(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Blue','.mat']);
 %                 save(resultfile1,'patchBlue');
 %                 
-%                 patchGrey = double(IGray(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchGrey = double(IGray(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Grey','.mat']);
 %                 save(resultfile1,'patchGrey');
 %                 
-%                 patchHue = double(IH(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchHue = double(IH(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Hue','.mat']);
 %                 save(resultfile1,'patchHue');
 %                 
-%                 patchSat = double(IS(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchSat = double(IS(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Saturation','.mat']);
 %                 save(resultfile1,'patchSat');
 %                 
-%                 patchVal = double(IV(normalpatches(k,2):normalpatches(k,2) + normalpatches(k,3),...
-%                     normalpatches(k,1):normalpatches(k,1)+normalpatches(k,3)));
+%                 patchVal = double(IV(testAbnormalPatches(k,2):testAbnormalPatches(k,2) + testAbnormalPatches(k,3),...
+%                     testAbnormalPatches(k,1):testAbnormalPatches(k,1)+testAbnormalPatches(k,3)));
 %                 resultfile1 = fullfile(resultfolder2,[name, '_', 'patch-', int2str(k),'_','Value','.mat']);
 %                 save(resultfile1,'patchVal');
 %             end
@@ -195,7 +195,7 @@ for i = 1 : numImageFiles
 %     end
 
 %% Feature Generation
-normalFeatures=[];
+testAbnormalFeatures=[];
 for l = 1 : numPatchFiles
     [~,name, ~] = fileparts(files2(l).name);
     resultfile1 = fullfile(resultfolder2,[name, '.mat']);
@@ -203,30 +203,40 @@ for l = 1 : numPatchFiles
     structConversion = struct2cell(conv);
     cellConversion = cell2mat(structConversion);
     cellConversion = double(cellConversion);
+        
+     F1 = double(var(cellConversion(:)));
+     F2 = skewness(cellConversion(:));
+     F3 = kurtosis(cellConversion(:));
+     F4 = mean2(double(cellConversion));
+     F5 = median(median(double(cellConversion)));
+     F6 = std2(cellConversion);
+     F7 = mode(mode(cellConversion));
+     F8 = min(cellConversion(:));
+     F9 = max(cellConversion(:));
+     F10 = mean(gradient(cellConversion(:)));
+     F11 = mean(rangefilt(cellConversion(:)));
+     
+    GLCM1 = graycomatrix(cellConversion);
+    GLCMconv = GLCM_Features1(GLCM1);
+    GLCMconv2 = struct2cell(GLCMconv);
+    GLCMfeatures = cell2mat(GLCMconv2);    
+    F12 = GLCMfeatures(1,1); %AutoCorrelation
+    F13 = GLCMfeatures(2,1); %Contrast
+    F14 = GLCMfeatures(7,1); %Dissimilarity
+    F15 = GLCMfeatures(8,1); %Energy
+    F16 = GLCMfeatures(9,1); %Entropy
+    F17 = GLCMfeatures(10,1); %Homogeneity
     
-    F1 = double(var(cellConversion(:)));
-    F2 = skewness(cellConversion(:));
-    F3 = kurtosis(cellConversion(:));
-    F4 = mean2(double(cellConversion));
-    F5 = median(median(double(cellConversion)));
-    F6 = std2(cellConversion);
-    F7 = mode(mode(cellConversion));
-    F8 = min(cellConversion(:));
-    F9 = max(cellConversion(:));
-    F10 = mean(gradient(cellConversion(:)));
-    F11 = mean(rangefilt(cellConversion(:)));
-    %GLCMconv = GLCM_Features1(cellConversion);
-    %GLCMconv2 = struct2cell(GLCMconv);
-    %F10 = cell2mat(GLCMconv2);
+    %Extraction of GLCM Features into Normal Features Vector Array    
+    testabnormalpatches = 1;
     
-    normalpatches = 1;
-    
-    normalFeatures = [normalFeatures; i l F1 F2 F3 F4 F5 F6...
-        F7 F8 F9 F10 F11 normalpatches];
+    testAbnormalFeatures = [testAbnormalFeatures; i l F1 F2 F3 F4 F5 F6 F7 F8 F9 F10...
+        F11 F12 F13 F14 F15 F16 F17 testabnormalpatches];
+
     
 end
 end
 
-save('normalFeatures');
+save('testAbnormalFeatures');
 
 end

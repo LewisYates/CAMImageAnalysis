@@ -197,7 +197,7 @@ for i = 1 : numImageFiles
 %     end
 %         
     %% Feature Generation
-    abnormalpatches=[];
+    abnormalFeatures=[];
     for l = 1 : numPatchFiles
         [~,name, ~] = fileparts(files2(l).name);
         resultfile1 = fullfile(resultfolder2,[name, '.mat']);
@@ -207,7 +207,7 @@ for i = 1 : numImageFiles
         
         F1 = double(var(cellConversion(:)));
         F2 = skewness(cellConversion(:));
-        F3 = kurtosis(double(cellConversion(:)));
+        F3 = kurtosis(cellConversion(:));
         F4 = mean2(double(cellConversion));
         F5 = median(median(double(cellConversion)));
         F6 = std2(cellConversion);
@@ -216,17 +216,28 @@ for i = 1 : numImageFiles
         F9 = max(cellConversion(:));
         F10 = mean(gradient(cellConversion(:)));
         F11 = mean(rangefilt(cellConversion(:)));
-        %GLCMconv = GLCM_Features1(cellConversion);
-        %GLCMconv2 = struct2cell(GLCMconv);
-        %F10 = cell2mat(GLCMconv2);
         
-        labelling = 1;
+        GLCM1 = graycomatrix(cellConversion);
+        GLCMconv = GLCM_Features1(GLCM1);
+        GLCMconv2 = struct2cell(GLCMconv);
+        GLCMfeatures = cell2mat(GLCMconv2);
+        F12 = GLCMfeatures(1,1); %AutoCorrelation
+        F13 = GLCMfeatures(2,1); %Contrast
+        F14 = GLCMfeatures(7,1); %Dissimilarity
+        F15 = GLCMfeatures(8,1); %Energy
+        F16 = GLCMfeatures(9,1); %Entropy
+        F17 = GLCMfeatures(10,1); %Homogeneity
         
-        abnormalpatches = [abnormalpatches; i l F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 labelling];
+        %Extraction of GLCM Features into Normal Features Vector Array
+        abnormalpatches = 1;
+        
+        abnormalFeatures = [abnormalFeatures; i l F1 F2 F3 F4 F5 F6 F7 F8 F9 F10...
+            F11 F12 F13 F14 F15 F16 F17 abnormalpatches];
+        
     end
 end
 
-save('abnormalpatches');
+save('abnormalFeatures');
 
 end
    
